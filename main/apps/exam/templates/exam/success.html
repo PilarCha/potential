@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style >
+    .left{
+      display: inline-block;
+    }
+    .right{
+      display: inline-block;
+      vertical-align: top;
+      margin-left: 40px;
+    }
+    fieldset{
+      width:500px;
+      display: inline-block;
+    }
+    h5{
+      text-align: center;
+    }
+    .quote{
+      display: inline-block;
+      vertical-align: top;
+    }
+    </style>
+    <meta charset="utf-8">
+    <title>Heeey Frieeend</title>
+  </head>
+  <body>
+    <h3>Welcome {{unique.name}}</h3>
+    <h3><a href="/logout">Logout</a></h3>
+
+    <fieldset>
+      <legend>Quotable Quotes</legend>
+      <div class="left">
+        {%for a in quotes%}
+        <fieldset>
+            <h5>{{a.author}}</h5>
+            <h5>{{a.quote}}</h5>
+            <h5>Posted by: <a href="/user/{{a.poster.id}}">{{a.poster.name}}</a></h5>
+            <form action="/add/{{a.id}}" method="POST">
+              {% csrf_token %}
+            <button type="submit" name="button">Addd to my list</button>
+          </form>
+        </fieldset>
+        {%endfor%}
+      </fieldset>
+
+      </div>
+      <div class="right">
+        <fieldset>
+          <legend>Your Favorites</legend>
+          {%for char in faves%}
+          <fieldset>
+            <h5>{{char.author}}</h5>
+            <h5>{{char.quote}}</h5>
+            <h5>Posted BY: <a href="/user/{{char.poster.id}}">{{char.poster.name}}</a></h5>
+            <form action="/remove/{{char.id}}" method="POST">
+              {% csrf_token %}
+              <button type="submit" name="button">Remove from Favzz</button>
+            </form>
+          </fieldset>
+          {%endfor%}
+        </fieldset>
+      </div>
+
+        <div class="quote">
+          {% if messages %}
+          <div class="messages">
+              {% for message in messages %}
+              <p>{{ message }}</p>
+              {% endfor %}
+          </div>
+          {% endif %}
+          <h3>Give a Quote</h3>
+          <form action="/create_quote" method="POST">
+            {% csrf_token %}
+            <label>Quoted By:
+              <input type="text" name="quoter" >
+            </label><br>
+            <label>Messages:
+              <textarea name="message" rows="8" cols="80"></textarea>
+            </label><br>
+            <button type="submit" name="button">Submit</button>
+          </form>
+        </div>
+      </div>
+  </body>
+</html>

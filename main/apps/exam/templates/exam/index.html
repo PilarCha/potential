@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    *{
+      text-align:left;
+    }
+
+    </style>
+    <meta charset="utf-8">
+    <title>Lets get this going</title>
+  </head>
+  <body>
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <h3>Register:</h3>
+    <form action="/create" method="POST">
+        {% csrf_token %}
+      <label>
+        Name:
+        <input type="text" name="name">
+      </label><br>
+      <label>Alias:
+        <input type="text" name="alias">
+      </label><br>
+      <label>Email:
+        <input type="text" name="email">
+      </label><br>
+      <label>password:
+        <input type="text" name="pass">
+      </label><br>
+      <p>password must be 8 characters!</p>
+      <label>Confirm password:
+        <input type="text" name="confirm">
+      </label><br>
+      <label>Date of Birth:
+        <input type="date" name="birth"><br>
+      </label>
+      <button type="submit" name="button">Register</button>
+    </form>
+    <h3>Login:</h3>
+    <form action="/login" method="POST">
+        {% csrf_token %}
+      <label>email:
+        <input type="text" name="lemail">
+      </label><br>
+      <label>password:
+        <input type="text" name="lpass">
+      </label><br>
+      <button type="submit" name="button">Login</button>
+    </form>
+  </body>
+</html>
